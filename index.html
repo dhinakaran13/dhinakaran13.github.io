@@ -3,100 +3,123 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Dhinakaran | Data Analyst Portfolio</title>
+<title>Dhinakaran R | Data Analyst Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family: Arial, sans-serif;
+  font-family:'Poppins',sans-serif;
 }
 
 body{
-  background:#f4f6f9;
-  color:#333;
-  line-height:1.6;
+  background:#f8fafc;
+  color:#1e293b;
 }
 
-/* HEADER */
+/* HERO */
 header{
-  background: linear-gradient(135deg,#1e1e2f,#3a3a6a);
-  color:white;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
   text-align:center;
-  padding:60px 20px;
+  background: linear-gradient(135deg,#e0f2fe,#f8fafc);
 }
 
 header h1{
-  font-size:40px;
+  font-size:55px;
+  color:#0ea5e9;
 }
 
 header p{
   font-size:18px;
   margin-top:10px;
+  color:#475569;
+}
+
+.btn{
+  margin-top:20px;
+  padding:12px 25px;
+  background:#0ea5e9;
+  color:white;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  font-weight:600;
+  transition:0.3s;
+}
+
+.btn:hover{
+  background:#0284c7;
+  transform:scale(1.05);
 }
 
 /* SECTIONS */
 section{
   max-width:900px;
-  margin:30px auto;
-  background:white;
+  margin:60px auto;
   padding:25px;
-  border-radius:12px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  background:white;
+  border-radius:15px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
 }
 
+/* TITLES */
 h2{
+  color:#0ea5e9;
   margin-bottom:15px;
-  color:#1e1e2f;
 }
 
 /* SKILLS */
-.skills{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-}
-
 .skills span{
-  background:#007bff;
-  color:white;
+  display:inline-block;
+  background:#e0f2fe;
+  color:#0369a1;
   padding:8px 12px;
+  margin:5px;
   border-radius:20px;
   font-size:14px;
+  border:1px solid #bae6fd;
+  transition:0.3s;
 }
 
-/* PROJECTS */
+.skills span:hover{
+  background:#0ea5e9;
+  color:white;
+}
+
+/* PROJECT */
 .project{
-  background:#f1f1f1;
+  background:#f1f5f9;
   padding:15px;
   margin-top:10px;
   border-radius:10px;
+  border:1px solid #e2e8f0;
+  transition:0.3s;
+}
+
+.project:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
 }
 
 /* CONTACT */
 .contact p{
-  margin:5px 0;
+  margin:6px 0;
 }
 
 /* FOOTER */
 footer{
   text-align:center;
-  padding:15px;
-  background:#1e1e2f;
-  color:white;
-  margin-top:30px;
-}
-
-/* BUTTON */
-.btn{
-  display:inline-block;
-  margin-top:15px;
-  padding:10px 20px;
-  background:#007bff;
-  color:white;
-  text-decoration:none;
-  border-radius:8px;
+  padding:20px;
+  background:#e2e8f0;
+  color:#475569;
+  margin-top:40px;
 }
 </style>
 </head>
@@ -105,16 +128,24 @@ footer{
 
 <header>
   <h1>Dhinakaran R</h1>
-  <p>Aspiring Data Analyst | CSE 2nd Year Student</p>
-  <a class="btn" href="#contact">Contact Me</a>
+  <p>CSE Student (2024 - 2028) | Aspiring Data Analyst</p>
+  <button class="btn" onclick="scrollToContact()">Contact Me</button>
 </header>
 
 <section>
   <h2>About Me</h2>
   <p>
-    I am a 2nd year Computer Science Engineering student passionate about Data Analytics,
-    Python, SQL, and building real-world data projects. I aim to become a professional Data Analyst.
+    I am a Computer Science and Engineering student at Anna University Regional Campus, Madurai.
+    Passionate about data analytics, machine learning, and transforming data into meaningful insights.
+    I aim to become a professional Data Analyst.
   </p>
+</section>
+
+<section>
+  <h2>Education</h2>
+  <p><b>University:</b> Anna University Regional Campus, Madurai</p>
+  <p><b>Degree:</b> BE Computer Science and Engineering</p>
+  <p><b>Duration:</b> 2024 - 2028</p>
 </section>
 
 <section>
@@ -123,10 +154,8 @@ footer{
     <span>Java</span>
     <span>Python</span>
     <span>SQL</span>
-    <span>HTML</span>
-    <span>CSS</span>
-    <span>JavaScript</span>
-    <span>Data Analysis</span>
+    <span>Excel</span>
+    <span>Power BI</span>
   </div>
 </section>
 
@@ -134,31 +163,30 @@ footer{
   <h2>Projects</h2>
 
   <div class="project">
-    <h3>Student Performance Analysis</h3>
-    <p>Analyzed student marks using Python and basic data concepts.</p>
-  </div>
-
-  <div class="project">
-    <h3>Sales Data Dashboard</h3>
-    <p>Created simple insights from sales dataset using Excel logic.</p>
-  </div>
-
-  <div class="project">
-    <h3>Portfolio Website</h3>
-    <p>Personal responsive portfolio built using HTML, CSS, JavaScript.</p>
+    <h3>Plastic Perception Analysis</h3>
+    <p>
+      Machine learning project using Logistic Regression to analyze survey data
+      and understand public awareness about plastic usage and environmental impact.
+    </p>
   </div>
 </section>
 
 <section class="contact" id="contact">
   <h2>Contact</h2>
-  <p>Email: example@gmail.com</p>
-  <p>LinkedIn: linkedin.com/in/yourprofile</p>
-  <p>GitHub: github.com/yourusername</p>
+  <p>Email: <b>dhinakaran1514@gmail.com</b></p>
+  <p>LinkedIn: <b>linkedin.com/in/dhinakaran-r-4a1420381</b></p>
+  <p>GitHub: <b>github.com/dhinakaran13</b></p>
 </section>
 
 <footer>
-  © 2026 Dhinakaran | Data Analyst Portfolio
+  © 2026 Dhinakaran R | Data Analyst Portfolio
 </footer>
+
+<script>
+function scrollToContact(){
+  document.getElementById("contact").scrollIntoView({behavior:"smooth"});
+}
+</script>
 
 </body>
 </html>
