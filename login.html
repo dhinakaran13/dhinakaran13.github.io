@@ -15,23 +15,41 @@
 
 <p id="msg"></p>
 
+<!-- Supabase CDN -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
 <script>
+
+/* =========================
+   🔥 SUPABASE INIT (FIXED)
+========================= */
+
 const supabaseUrl = "https://ezkwfqafaitcgatmkxvb.supabase.co";
+
+/* ⚠️ CHANGE THIS ONLY */
 const supabaseKey = ""eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV6a3dmcWFmYWl0Y2dhdG1reHZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4ODg4OTIsImV4cCI6MjA5NjQ2NDg5Mn0.prvfYOphxDw9rfx3_ZpVKia1yGjxU6tvHYLs1zMR_MQ";
 
-const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+/* safe client creation */
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-/* ⭐ MUST BE GLOBAL */
+
+/* =========================
+   🚀 LOGIN FUNCTION
+========================= */
+
 window.login = async function(){
 
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
+  if(!email || !password){
+    document.getElementById("msg").innerText = "Enter email & password";
+    return;
+  }
+
   document.getElementById("msg").innerText = "Logging in...";
 
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
     email,
     password
   });
@@ -49,7 +67,9 @@ window.login = async function(){
   setTimeout(()=>{
     window.location.href = "dashboard.html";
   }, 800);
+
 }
+
 </script>
 
 </body>
