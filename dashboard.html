@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Admin Dashboard</title>
+
   <style>
     body{
       font-family: Arial;
@@ -41,10 +42,10 @@
     button{
       padding:10px;
       width:100%;
-      background:black;
-      color:white;
       border:none;
       cursor:pointer;
+      background:black;
+      color:white;
     }
 
     button:hover{
@@ -55,6 +56,11 @@
       background:red;
       width:auto;
       padding:8px 15px;
+    }
+
+    .msg{
+      font-size:14px;
+      color:green;
     }
   </style>
 </head>
@@ -68,30 +74,33 @@
 
 <div class="container">
 
-  <!-- SKILLS -->
-  <div class="card">
-    <h3>Add Skill</h3>
-    <input id="skill" placeholder="Enter Skill">
-    <button onclick="addSkill()">Add Skill</button>
-  </div>
-
   <!-- PROJECTS -->
   <div class="card">
     <h3>Add Project</h3>
     <input id="title" placeholder="Project Title">
     <textarea id="desc" placeholder="Project Description"></textarea>
     <button onclick="addProject()">Add Project</button>
+    <p id="projectMsg" class="msg"></p>
+  </div>
+
+  <!-- CERTIFICATES -->
+  <div class="card">
+    <h3>Add Certificate</h3>
+    <input id="certName" placeholder="Certificate Name">
+    <input id="certImg" placeholder="Image URL">
+    <button onclick="addCertificate()">Add Certificate</button>
+    <p id="certMsg" class="msg"></p>
   </div>
 
 </div>
 
-<!-- Supabase -->
+<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
 <script>
 
 /* =========================
-   🔐 LOGIN CHECK (IMPORTANT)
+   🔐 LOGIN CHECK
 ========================= */
 
 if(!localStorage.getItem("isLoggedIn")){
@@ -120,27 +129,6 @@ function logout(){
 
 
 /* =========================
-   ⭐ ADD SKILL
-========================= */
-
-async function addSkill(){
-
-  const skill = document.getElementById("skill").value;
-
-  const { error } = await supabase
-    .from("skills")
-    .insert([{ name: skill }]);
-
-  if(error){
-    alert("Error adding skill");
-  } else {
-    alert("Skill added!");
-    document.getElementById("skill").value = "";
-  }
-}
-
-
-/* =========================
    🚀 ADD PROJECT
 ========================= */
 
@@ -151,19 +139,37 @@ async function addProject(){
 
   const { error } = await supabase
     .from("projects")
-    .insert([
-      {
-        title: title,
-        description: desc
-      }
-    ]);
+    .insert([{ title, description: desc }]);
 
   if(error){
-    alert("Error adding project");
+    document.getElementById("projectMsg").innerText = "❌ Error adding project";
   } else {
-    alert("Project added!");
+    document.getElementById("projectMsg").innerText = "✅ Project added!";
     document.getElementById("title").value = "";
     document.getElementById("desc").value = "";
+  }
+}
+
+
+/* =========================
+   🏆 ADD CERTIFICATE
+========================= */
+
+async function addCertificate(){
+
+  const name = document.getElementById("certName").value;
+  const img = document.getElementById("certImg").value;
+
+  const { error } = await supabase
+    .from("certificates")
+    .insert([{ certificate_name: name, image_url: img }]);
+
+  if(error){
+    document.getElementById("certMsg").innerText = "❌ Error adding certificate";
+  } else {
+    document.getElementById("certMsg").innerText = "✅ Certificate added!";
+    document.getElementById("certName").value = "";
+    document.getElementById("certImg").value = "";
   }
 }
 
