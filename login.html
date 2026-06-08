@@ -81,29 +81,23 @@ async function login(){
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const msg = document.getElementById("msg");
-
-  msg.innerText = "Logging in...";
-
-  const { data, error } = await supabaseClient.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email: email,
     password: password
   });
 
   if(error){
-    msg.innerText = "❌ Login Failed. Check email/password";
+    console.log("ERROR:", error.message);
+    alert(error.message);
     return;
   }
 
-  // Success login
-  msg.innerText = "✅ Login Success! Redirecting...";
+  alert("Login Success");
 
-  // Save session (simple control)
   localStorage.setItem("isLoggedIn", "true");
 
-  setTimeout(()=>{
-    window.location.href = "dashboard.html";
-  }, 1000);
+  window.location.href = "dashboard.html";
+}
 }
 </script>
 
