@@ -15,22 +15,20 @@
 
 <p id="msg"></p>
 
-<!-- Supabase CDN -->
+<!-- Supabase CDN (MUST BE FIRST) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
 <script>
 
 /* =========================
-   🔥 SUPABASE INIT (FIXED)
+   🔥 SUPABASE CONFIG
 ========================= */
 
 const supabaseUrl = "https://ezkwfqafaitcgatmkxvb.supabase.co";
-
-/* ⚠️ CHANGE THIS ONLY */
 const supabaseKey = ""eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV6a3dmcWFmYWl0Y2dhdG1reHZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4ODg4OTIsImV4cCI6MjA5NjQ2NDg5Mn0.prvfYOphxDw9rfx3_ZpVKia1yGjxU6tvHYLs1zMR_MQ";
 
-/* safe client creation */
-const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+/* ⚠️ IMPORTANT FIX */
+const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 
 /* =========================
