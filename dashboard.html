@@ -5,8 +5,8 @@
   <style>
     body{
       font-family: Arial;
-      background:#f5f5f5;
       margin:0;
+      background:#f4f4f4;
     }
 
     header{
@@ -19,10 +19,10 @@
     }
 
     .container{
-      padding:20px;
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:20px;
+      padding:20px;
     }
 
     .card{
@@ -73,7 +73,6 @@
     <h3>Add Skill</h3>
     <input id="skill" placeholder="Enter Skill">
     <button onclick="addSkill()">Add Skill</button>
-    <p id="skillMsg"></p>
   </div>
 
   <!-- PROJECTS -->
@@ -82,7 +81,6 @@
     <input id="title" placeholder="Project Title">
     <textarea id="desc" placeholder="Project Description"></textarea>
     <button onclick="addProject()">Add Project</button>
-    <p id="projectMsg"></p>
   </div>
 
 </div>
@@ -93,22 +91,22 @@
 <script>
 
 /* =========================
-   🔥 STEP 1: CHANGE THIS
+   🔐 LOGIN CHECK (IMPORTANT)
 ========================= */
 
-const supabaseUrl = "https://ezkwfqafaitcgatmkxvb.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV6a3dmcWFmYWl0Y2dhdG1reHZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4ODg4OTIsImV4cCI6MjA5NjQ2NDg5Mn0.prvfYOphxDw9rfx3_ZpVKia1yGjxU6tvHYLs1zMR_MQ";
-
-const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+if(!localStorage.getItem("isLoggedIn")){
+  window.location.href = "login.html";
+}
 
 
 /* =========================
-   🔐 LOGIN CHECK
+   🔥 SUPABASE SETUP
 ========================= */
 
-if(localStorage.getItem("isLoggedIn") !== "true"){
-  window.location.href = "login.html";
-}
+const supabaseUrl = "https://ezkwfqafaitcgatmkxvb.supabase.co";
+const supabaseKey = ""eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV6a3dmcWFmYWl0Y2dhdG1reHZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4ODg4OTIsImV4cCI6MjA5NjQ2NDg5Mn0.prvfYOphxDw9rfx3_ZpVKia1yGjxU6tvHYLs1zMR_MQ";
+
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
 
 /* =========================
@@ -128,16 +126,15 @@ function logout(){
 async function addSkill(){
 
   const skill = document.getElementById("skill").value;
-  const msg = document.getElementById("skillMsg");
 
-  const { error } = await supabaseClient
+  const { error } = await supabase
     .from("skills")
     .insert([{ name: skill }]);
 
   if(error){
-    msg.innerText = "❌ Error adding skill";
+    alert("Error adding skill");
   } else {
-    msg.innerText = "✅ Skill added!";
+    alert("Skill added!");
     document.getElementById("skill").value = "";
   }
 }
@@ -151,9 +148,8 @@ async function addProject(){
 
   const title = document.getElementById("title").value;
   const desc = document.getElementById("desc").value;
-  const msg = document.getElementById("projectMsg");
 
-  const { error } = await supabaseClient
+  const { error } = await supabase
     .from("projects")
     .insert([
       {
@@ -163,9 +159,9 @@ async function addProject(){
     ]);
 
   if(error){
-    msg.innerText = "❌ Error adding project";
+    alert("Error adding project");
   } else {
-    msg.innerText = "✅ Project added!";
+    alert("Project added!");
     document.getElementById("title").value = "";
     document.getElementById("desc").value = "";
   }
