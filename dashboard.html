@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+  <style>
+    body{
+      font-family: Arial;
+      background:#f5f5f5;
+      margin:0;
+    }
+
+    header{
+      background:black;
+      color:white;
+      padding:15px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .container{
+      padding:20px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+    }
+
+    .card{
+      background:white;
+      padding:20px;
+      border-radius:10px;
+      box-shadow:0px 0px 10px #ccc;
+    }
+
+    input, textarea{
+      width:100%;
+      padding:10px;
+      margin:10px 0;
+    }
+
+    button{
+      padding:10px;
+      width:100%;
+      background:black;
+      color:white;
+      border:none;
+      cursor:pointer;
+    }
+
+    button:hover{
+      background:green;
+    }
+
+    .logout{
+      background:red;
+      width:auto;
+      padding:8px 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h2>Admin Dashboard</h2>
+  <button class="logout" onclick="logout()">Logout</button>
+</header>
+
+<div class="container">
+
+  <!-- SKILLS -->
+  <div class="card">
+    <h3>Add Skill</h3>
+    <input id="skill" placeholder="Enter Skill">
+    <button onclick="addSkill()">Add Skill</button>
+    <p id="skillMsg"></p>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="card">
+    <h3>Add Project</h3>
+    <input id="title" placeholder="Project Title">
+    <textarea id="desc" placeholder="Project Description"></textarea>
+    <button onclick="addProject()">Add Project</button>
+    <p id="projectMsg"></p>
+  </div>
+
+</div>
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<script>
+
+/* =========================
+   🔥 STEP 1: CHANGE THIS
+========================= */
+
+const supabaseUrl = "sb_publishable_V0ndJ7D6d9Ion1RtnARAdw_F5DVbyC_";
+const supabaseKey = "YOUR_SUPABASE_ANON_KEY";
+
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+
+/* =========================
+   🔐 LOGIN CHECK
+========================= */
+
+if(localStorage.getItem("isLoggedIn") !== "true"){
+  window.location.href = "login.html";
+}
+
+
+/* =========================
+   🚪 LOGOUT
+========================= */
+
+function logout(){
+  localStorage.removeItem("isLoggedIn");
+  window.location.href = "login.html";
+}
+
+
+/* =========================
+   ⭐ ADD SKILL
+========================= */
+
+async function addSkill(){
+
+  const skill = document.getElementById("skill").value;
+  const msg = document.getElementById("skillMsg");
+
+  const { error } = await supabaseClient
+    .from("skills")
+    .insert([{ name: skill }]);
+
+  if(error){
+    msg.innerText = "❌ Error adding skill";
+  } else {
+    msg.innerText = "✅ Skill added!";
+    document.getElementById("skill").value = "";
+  }
+}
+
+
+/* =========================
+   🚀 ADD PROJECT
+========================= */
+
+async function addProject(){
+
+  const title = document.getElementById("title").value;
+  const desc = document.getElementById("desc").value;
+  const msg = document.getElementById("projectMsg");
+
+  const { error } = await supabaseClient
+    .from("projects")
+    .insert([
+      {
+        title: title,
+        description: desc
+      }
+    ]);
+
+  if(error){
+    msg.innerText = "❌ Error adding project";
+  } else {
+    msg.innerText = "✅ Project added!";
+    document.getElementById("title").value = "";
+    document.getElementById("desc").value = "";
+  }
+}
+
+</script>
+
+</body>
+</html>
