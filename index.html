@@ -7,8 +7,10 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-<style>
+<!-- 1. SUPABASE LIBRARY INJECTION -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<style>
 *{
     margin:0;
     padding:0;
@@ -23,7 +25,6 @@ body{
 }
 
 /* HERO SECTION */
-
 .hero{
     min-height:100vh;
     display:flex;
@@ -85,7 +86,6 @@ body{
 }
 
 /* SECTION */
-
 section{
     max-width:1000px;
     margin:40px auto;
@@ -101,7 +101,6 @@ h2{
 }
 
 /* SKILLS */
-
 .skills span{
     display:inline-block;
     background:#e0f2fe;
@@ -114,7 +113,6 @@ h2{
 }
 
 /* PROJECTS & CERTIFICATES */
-
 .project{
     background:#f1f5f9;
     padding:15px;
@@ -127,8 +125,16 @@ h2{
     margin-bottom:10px;
 }
 
-/* CONTACT */
+.project img {
+    max-width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: block;
+}
 
+/* CONTACT */
 .contact a{
     color:#0ea5e9;
     text-decoration:none;
@@ -140,7 +146,6 @@ h2{
 }
 
 /* FOOTER */
-
 footer{
     text-align:center;
     padding:20px;
@@ -150,88 +155,66 @@ footer{
 }
 
 /* MOBILE */
-
 @media(max-width:768px){
-
     .hero-content{
         text-align:center;
     }
-
     .hero-content h1{
         font-size:38px;
     }
-
     .profile-pic{
         width:200px;
         height:200px;
     }
 }
-
 </style>
 </head>
 
 <body>
 
 <header class="hero">
-
     <div class="hero-container">
-
         <div>
-            <img src="profile.jpg" alt="Dhinakaran R" class="profile-pic">
+            <!-- 2. ID ADDED FOR PROFILE PIC -->
+            <img src="profile.jpg" alt="Dhinakaran R" class="profile-pic" id="portfolio-profile-pic">
         </div>
 
         <div class="hero-content">
-
             <h1>Dhinakaran R</h1>
-
             <h3>Aspiring Data Analyst</h3>
-
             <p>
                 BE Computer Science and Engineering<br>
                 Anna University Regional Campus, Madurai<br>
                 2024 - 2028
             </p>
-
             <button class="btn" onclick="scrollToContact()">
                 Contact Me
             </button>
-
         </div>
-
     </div>
-
 </header>
 
 <section>
-
     <h2>About Me</h2>
-
-    <p>
+    <!-- 3. ID ADDED FOR ABOUT ME TEXT -->
+    <p id="portfolio-about-text">
         I am a Computer Science and Engineering student at Anna University Regional Campus, Madurai.
         I am passionate about Data Analytics, Machine Learning, Business Intelligence and Data Visualization.
         My goal is to become a professional Data Analyst and solve real-world business problems using data.
     </p>
-
 </section>
 
 <section>
-
     <h2>Education</h2>
-
     <p><strong>University:</strong> Anna University Regional Campus, Madurai</p>
-
     <p><strong>Degree:</strong> BE Computer Science and Engineering</p>
-
     <p><strong>Duration:</strong> 2024 - 2028</p>
-
 </section>
 
 <section>
-
     <h2>Skills</h2>
-
-    <div class="skills">
-
+    <!-- 4. CONTAINER FOR DYNAMIC SKILLS -->
+    <div class="skills" id="portfolio-skills-container">
         <span>Java</span>
         <span>Python</span>
         <span>SQL</span>
@@ -239,95 +222,51 @@ footer{
         <span>Power BI</span>
         <span>Data Analytics</span>
         <span>Machine Learning</span>
-
     </div>
-
 </section>
 
 <section>
-
     <h2>Projects</h2>
-
-    <div class="project">
-
-        <h3>Plastic Perception Analysis using Logistic Regression</h3>
-
-        <p>
-            Developed a machine learning model using Logistic Regression
-            to analyze survey data and evaluate public awareness regarding
-            plastic usage and environmental impact.
-        </p>
-
+    <!-- 5. CONTAINER FOR DYNAMIC PROJECTS -->
+    <div id="portfolio-projects-container">
+        <div class="project">
+            <h3>Plastic Perception Analysis using Logistic Regression</h3>
+            <p>
+                Developed a machine learning model using Logistic Regression
+                to analyze survey data and evaluate public awareness regarding
+                plastic usage and environmental impact.
+            </p>
+        </div>
     </div>
-
 </section>
 
 <section>
-
     <h2>Certifications</h2>
-
-    <div class="project">
-
-        <h3>Deloitte Data Analytics Job Simulation</h3>
-
-        <p>
-            Completed Deloitte Virtual Internship focused on Data Analytics,
-            Data Visualization and Business Insights.
-        </p>
-
+    <!-- 6. CONTAINER FOR DYNAMIC CERTIFICATES -->
+    <div id="portfolio-certificates-container">
+        <div class="project">
+            <h3>Deloitte Data Analytics Job Simulation</h3>
+            <p>
+                Completed Deloitte Virtual Internship focused on Data Analytics,
+                Data Visualization and Business Insights.
+            </p>
+        </div>
+        <div class="project">
+            <h3>Google Data Analytics Professional Certificate</h3>
+            <p>Foundations: Data, Data, Everywhere</p>
+        </div>
+        <div class="project">
+            <h3>Google Data Analytics Professional Certificate</h3>
+            <p>Ask Questions to Make Data-Driven Decisions</p>
+        </div>
     </div>
-
-    <div class="project">
-
-        <h3>Google Data Analytics Professional Certificate</h3>
-
-        <p>
-            Foundations: Data, Data, Everywhere
-        </p>
-
-    </div>
-
-    <div class="project">
-
-        <h3>Google Data Analytics Professional Certificate</h3>
-
-        <p>
-            Ask Questions to Make Data-Driven Decisions
-        </p>
-
-    </div>
-
 </section>
 
 <section class="contact" id="contact">
-
     <h2>Contact</h2>
-
-    <p>
-        📧 Email:
-        <a href="mailto:dhinakaran1514@gmail.com">
-            dhinakaran1514@gmail.com
-        </a>
-    </p>
-
-    <br>
-
-    <p>
-        💼 LinkedIn:
-        <a href="https://www.linkedin.com/in/dhinakaran-r-4a1420381" target="_blank">
-            View LinkedIn Profile
-        </a>
-    </p>
-
-    <br>
-
-    <p>
-        💻 GitHub:
-        <a href="https://github.com/dhinakaran13" target="_blank">
-            View GitHub Profile
-        </a>
-    </p>
-
+    <p>📧 Email: <a href="mailto:dhinakaran1514@gmail.com">dhinakaran1514@gmail.com</a></p><br>
+    <p>💼 LinkedIn: <a href="https://www.linkedin.com/in/dhinakaran-r-4a1420381" target="_blank">View LinkedIn Profile</a></p><br>
+    <p>💻 GitHub: <a href="https://github.com/dhinakaran13" target="_blank">View GitHub Profile</a></p>
 </section>
 
 <footer>
@@ -335,13 +274,79 @@ footer{
 </footer>
 
 <script>
-
 function scrollToContact(){
     document.getElementById("contact").scrollIntoView({
         behavior:"smooth"
     });
 }
 
+// ----------------------------------------------------
+// SUPABASE BACKEND DYNAMIC LOGIC
+// ----------------------------------------------------
+const supabaseUrl = 'https://ezkwfqafaitcgatmkxvb.supabase.co';
+const supabaseKey = 'YOUR_ANON_KEY'; // Ungaloda real Supabase Anon Key-ai inga paste pannuga!
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+window.addEventListener('DOMContentLoaded', async () => {
+    
+    // A. FETCH DYNAMIC ABOUT ME
+    const { data: aboutData } = await supabase.from('about_me').select('content').single();
+    if (aboutData && aboutData.content) {
+        document.getElementById('portfolio-about-text').innerText = aboutData.content;
+    }
+
+    // B. FETCH DYNAMIC PROFILE IMAGE
+    // Inga 'profile_config' or localized config table-la irunthu primary url-a fetch panna use aagum
+    const { data: profileData } = await supabase.from('about_me').select('image_url').single(); 
+    if (profileData && profileData.image_url) {
+        document.getElementById('portfolio-profile-pic').src = profileData.image_url;
+    }
+
+    // C. FETCH DYNAMIC SKILLS
+    const { data: skills } = await supabase.from('skills').select('*');
+    if (skills && skills.length > 0) {
+        const skillsContainer = document.getElementById('portfolio-skills-container');
+        skillsContainer.innerHTML = ''; // default hardcoded values-a clear seiyum
+        skills.forEach(skill => {
+            skillsContainer.innerHTML += `<span>${skill.skill_name}</span>`;
+        });
+    }
+
+    // D. FETCH DYNAMIC PROJECTS
+    const { data: projects } = await supabase.from('projects').select('*');
+    if (projects && projects.length > 0) {
+        const projectsContainer = document.getElementById('portfolio-projects-container');
+        projectsContainer.innerHTML = ''; 
+        projects.forEach(project => {
+            // Image_url table-la iruntha pic add aagum, illana text details mattum render aagum
+            let imgTag = project.image_url ? `<img src="${project.image_url}" alt="${project.name}">` : '';
+            projectsContainer.innerHTML += `
+                <div class="project">
+                    ${imgTag}
+                    <h3>${project.name}</h3>
+                    <p>${project.description}</p>
+                </div>
+            `;
+        });
+    }
+
+    // E. FETCH DYNAMIC CERTIFICATES
+    const { data: certificates } = await supabase.from('certificates').select('*');
+    if (certificates && certificates.length > 0) {
+        const certsContainer = document.getElementById('portfolio-certificates-container');
+        certsContainer.innerHTML = ''; 
+        certificates.forEach(cert => {
+            let imgTag = cert.image_url ? `<img src="${cert.image_url}" alt="${cert.name}">` : '';
+            certsContainer.innerHTML += `
+                <div class="project">
+                    ${imgTag}
+                    <h3>${cert.name}</h3>
+                    <p>${cert.description}</p>
+                </div>
+            `;
+        });
+    }
+});
 </script>
 
 </body>
