@@ -336,6 +336,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         const certsContainer = document.getElementById('portfolio-certificates-container');
         certsContainer.innerHTML = ''; 
         certificates.forEach(cert => {
+            console.log(cert);
             let imgTag = cert.image_url ? `<img src="${cert.image_url}" alt="${cert.created_name}">` : '';
             certsContainer.innerHTML += `
                 <div class="project">
