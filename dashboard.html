@@ -96,6 +96,30 @@
 
 <!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<div>
+  <h3>Change Profile Image</h3>
+  <input type="file" id="profile-input" accept="image/*">
+  <button onclick="uploadProfileImage()">Upload Profile Photo</button>
+</div>
+
+<div>
+  <h3>Update About Me</h3>
+  <textarea id="about-text" rows="4" placeholder="Write about yourself..."></textarea>
+  <button onclick="updateAbout()">Update About</button>
+</div>
+
+<div>
+  <h3>Add Project</h3>
+  <input type="text" id="project-name" placeholder="Project Name">
+  <textarea id="project-desc" placeholder="Project Description"></textarea>
+  <input type="file" id="project-img-input" accept="image/*">
+  <button onclick="addProject()">Add Project</button>
+</div>
+
+<div>
+  <h3>Current Projects</h3>
+  <div id="projects-list"></div>
+</div>
 
 <script>
 
