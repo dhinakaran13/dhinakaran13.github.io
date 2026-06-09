@@ -290,20 +290,20 @@ const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 window.addEventListener('DOMContentLoaded', async () => {
     
     // A. FETCH DYNAMIC ABOUT ME
-    const { data: aboutData } = await supabase.from('about_me').select('content').single();
+    const { data: aboutData } = await supabaseClient.from('about_me').select('content').single();
     if (aboutData && aboutData.content) {
         document.getElementById('portfolio-about-text').innerText = aboutData.content;
     }
 
     // B. FETCH DYNAMIC PROFILE IMAGE
     // Inga 'profile_config' or localized config table-la irunthu primary url-a fetch panna use aagum
-    const { data: profileData } = await supabase.from('about_me').select('image_url').single(); 
+    const { data: profileData } = await supabaseClient.from('about_me').select('image_url').single(); 
     if (profileData && profileData.image_url) {
         document.getElementById('portfolio-profile-pic').src = profileData.image_url;
     }
 
     // C. FETCH DYNAMIC SKILLS
-    const { data: skills } = await supabase.from('skills').select('*');
+    const { data: skills } = await supabaseClient.from('skills').select('*');
     if (skills && skills.length > 0) {
         const skillsContainer = document.getElementById('portfolio-skills-container');
         skillsContainer.innerHTML = ''; // default hardcoded values-a clear seiyum
@@ -313,7 +313,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
 
     // D. FETCH DYNAMIC PROJECTS
-    const { data: projects } = await supabase.from('projects').select('*');
+    const { data: projects } = await supabaseClient.from('projects').select('*');
     if (projects && projects.length > 0) {
         const projectsContainer = document.getElementById('portfolio-projects-container');
         projectsContainer.innerHTML = ''; 
@@ -331,7 +331,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
 
     // E. FETCH DYNAMIC CERTIFICATES
-    const { data: certificates } = await supabase.from('certificates').select('*');
+    const { data: certificates } = await supabaseClient.from('certificates').select('*');
     if (certificates && certificates.length > 0) {
         const certsContainer = document.getElementById('portfolio-certificates-container');
         certsContainer.innerHTML = ''; 
