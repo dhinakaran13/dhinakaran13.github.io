@@ -336,11 +336,11 @@ window.addEventListener('DOMContentLoaded', async () => {
         const certsContainer = document.getElementById('portfolio-certificates-container');
         certsContainer.innerHTML = ''; 
         certificates.forEach(cert => {
-            let imgTag = cert.image_url ? `<img src="${cert.image_url}" alt="${cert.name}">` : '';
+            let imgTag = cert.image_url ? `<img src="${cert.image_url}" alt="${cert.created_name}">` : '';
             certsContainer.innerHTML += `
                 <div class="project">
                     ${imgTag}
-                    <h3>${cert.name}</h3>
+                    <h3>${cert.created_name}</h3>
                     <p>${cert.description}</p>
                 </div>
             `;
