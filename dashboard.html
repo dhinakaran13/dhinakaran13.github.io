@@ -551,6 +551,27 @@ loadSkills();
 
 }
 
+async function editSkill(id,currentSkill){
+
+const newSkill =
+prompt(
+"Edit Skill",
+currentSkill
+);
+
+if(!newSkill) return;
+
+await supabaseClient
+.from("skills")
+.update({
+skill_name:newSkill
+})
+.eq("id",id);
+
+loadSkills();
+
+}
+
 async function loadSkills(){
 
 const {data} =
@@ -575,6 +596,16 @@ list.innerHTML += `
 <span>
 ${skill.skill_name}
 </span>
+
+<button
+onclick="editSkill(
+${skill.id},
+'${skill.skill_name}'
+)">
+
+Edit
+
+</button>
 
 <button
 class="danger-btn"
@@ -679,6 +710,42 @@ await supabaseClient
 loadProjects();
 
 }
+async function editProject(
+id,
+currentName,
+currentDescription
+){
+
+const newName =
+prompt(
+"Edit Project Name",
+currentName
+);
+
+if(!newName) return;
+
+const newDescription =
+prompt(
+"Edit Project Description",
+currentDescription
+);
+
+if(!newDescription) return;
+
+await supabaseClient
+.from("projects")
+.update({
+
+name:newName,
+
+description:newDescription
+
+})
+.eq("id",id);
+
+loadProjects();
+
+}
 
 async function loadProjects(){
 
@@ -721,6 +788,20 @@ ${project.name}
 <p>
 ${project.description}
 </p>
+
+<button
+onclick="editProject(
+${project.id},
+`${project.name}`,
+`${project.description}`
+)">
+
+Edit
+
+</button>
+<button onclick="changeProjectImage(${project.id})">
+Change Image
+</button>
 
 <button
 class="danger-btn"
@@ -824,6 +905,42 @@ await supabaseClient
 loadCertificates();
 
 }
+async function editCertificate(
+id,
+currentName,
+currentDescription
+){
+
+const newName =
+prompt(
+"Edit Certificate Name",
+currentName
+);
+
+if(!newName) return;
+
+const newDescription =
+prompt(
+"Edit Certificate Description",
+currentDescription
+);
+
+if(!newDescription) return;
+
+await supabaseClient
+.from("certificates")
+.update({
+
+created_name:newName,
+
+description:newDescription
+
+})
+.eq("id",id);
+
+loadCertificates();
+
+}
 
 async function loadCertificates(){
 
@@ -866,6 +983,17 @@ ${cert.created_name}
 <p>
 ${cert.description}
 </p>
+
+<button
+onclick="editCertificate(
+${cert.id},
+`${cert.created_name}`,
+`${cert.description}`
+)">
+
+Edit
+
+</button>
 
 <button
 class="danger-btn"
