@@ -1,201 +1,892 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body{
-      font-family: Arial;
-      margin:0;
-      background:#f4f4f4;
-    }
+<title>Portfolio Admin Panel</title>
 
-    header{
-      background:black;
-      color:white;
-      padding:15px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    }
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    .container{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:20px;
-      padding:20px;
-    }
+<style>
 
-    .card{
-      background:white;
-      padding:20px;
-      border-radius:10px;
-      box-shadow:0px 0px 10px #ccc;
-    }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
 
-    input, textarea{
-      width:100%;
-      padding:10px;
-      margin:10px 0;
-    }
+body{
+background:#f4f7fc;
+display:flex;
+min-height:100vh;
+}
 
-    button{
-      padding:10px;
-      width:100%;
-      border:none;
-      cursor:pointer;
-      background:black;
-      color:white;
-    }
+.sidebar{
+width:260px;
+background:#111827;
+color:white;
+padding:25px;
+position:fixed;
+height:100%;
+}
 
-    button:hover{
-      background:green;
-    }
+.sidebar h2{
+margin-bottom:30px;
+text-align:center;
+}
 
-    .logout{
-      background:red;
-      width:auto;
-      padding:8px 15px;
-    }
+.sidebar button{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+background:#1f2937;
+color:white;
+}
 
-    .msg{
-      font-size:14px;
-      color:green;
-    }
-  </style>
+.sidebar button:hover{
+background:#2563eb;
+}
+
+.main{
+margin-left:260px;
+padding:30px;
+width:100%;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:15px;
+margin-bottom:25px;
+box-shadow:0 3px 15px rgba(0,0,0,.1);
+}
+
+.card h2{
+margin-bottom:15px;
+}
+
+input,
+textarea{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:1px solid #ddd;
+border-radius:8px;
+}
+
+textarea{
+resize:none;
+}
+
+.primary-btn{
+background:#2563eb;
+color:white;
+border:none;
+padding:12px;
+margin-top:15px;
+border-radius:8px;
+cursor:pointer;
+width:100%;
+}
+
+.primary-btn:hover{
+background:#1d4ed8;
+}
+
+.danger-btn{
+background:red;
+color:white;
+border:none;
+padding:8px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.skill-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px;
+margin-top:10px;
+background:#f8fafc;
+border-radius:8px;
+}
+
+.profile-preview{
+width:150px;
+height:150px;
+border-radius:50%;
+object-fit:cover;
+margin-top:15px;
+border:4px solid #2563eb;
+}
+
+</style>
 </head>
 
 <body>
 
-<header>
-  <h2>Admin Dashboard</h2>
-  <button class="logout" onclick="logout()">Logout</button>
-</header>
+<div class="sidebar">
 
-<div class="container">
+<h2>Admin Panel</h2>
 
-  <!-- PROJECTS -->
-  <div class="card">
-    <h3>Add Project</h3>
-    <input id="title" placeholder="Project Title">
-    <textarea id="desc" placeholder="Project Description"></textarea>
-    <button onclick="addProject()">Add Project</button>
-    <p id="projectMsg" class="msg"></p>
-  </div>
+<button onclick="showSection('profileSection')">
+Profile
+</button>
 
-  <!-- CERTIFICATES -->
-  <div class="card">
-    <h3>Add Certificate</h3>
-    <input id="certName" placeholder="Certificate Name">
-    <input id="certImg" placeholder="Image URL">
-    <button onclick="addCertificate()">Add Certificate</button>
-    <p id="certMsg" class="msg"></p>
-  </div>
+<button onclick="showSection('aboutSection')">
+About Me
+</button>
+
+<button onclick="showSection('skillsSection')">
+Skills
+</button>
+
+<button onclick="showSection('projectsSection')">
+Projects
+</button>
+
+<button onclick="showSection('certificatesSection')">
+Certificates
+</button>
+
+<button onclick="logout()">
+Logout
+</button>
 
 </div>
 
-<!-- SUPABASE -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-<div>
-  <h3>Change Profile Image</h3>
-  <input type="file" id="profile-input" accept="image/*">
-  <button onclick="uploadProfileImage()">Upload Profile Photo</button>
+<div class="main">
+
+<!-- PROFILE -->
+
+<div class="card section" id="profileSection">
+
+<h2>Profile Image</h2>
+
+<input
+type="file"
+id="profile-input"
+accept="image/*">
+
+<button
+class="primary-btn"
+onclick="uploadProfileImage()">
+
+Upload Profile Image
+
+</button>
+
+<img
+id="profilePreview"
+class="profile-preview">
+
 </div>
 
-<div>
-  <h3>Update About Me</h3>
-  <textarea id="about-text" rows="4" placeholder="Write about yourself..."></textarea>
-  <button onclick="updateAbout()">Update About</button>
+<!-- ABOUT -->
+
+<div
+class="card section"
+id="aboutSection"
+style="display:none;">
+
+<h2>About Me</h2>
+
+<textarea
+id="about-text"
+rows="6">
+</textarea>
+
+<button
+class="primary-btn"
+onclick="updateAbout()">
+
+Save About
+
+</button>
+
 </div>
 
-<div>
-  <h3>Add Project</h3>
-  <input type="text" id="project-name" placeholder="Project Name">
-  <textarea id="project-desc" placeholder="Project Description"></textarea>
-  <input type="file" id="project-img-input" accept="image/*">
-  <button onclick="addProject()">Add Project</button>
+<!-- SKILLS -->
+
+<div
+class="card section"
+id="skillsSection"
+style="display:none;">
+
+<h2>Skills</h2>
+
+<input
+type="text"
+id="skillInput"
+placeholder="Enter Skill">
+
+<button
+class="primary-btn"
+onclick="addSkill()">
+
+Add Skill
+
+</button>
+
+<div id="skillsList"></div>
+
 </div>
 
-<div>
-  <h3>Current Projects</h3>
-  <div id="projects-list"></div>
+<!-- PROJECTS -->
+
+<div
+class="card section"
+id="projectsSection"
+style="display:none;">
+
+<h2>Projects</h2>
+
+<div id="projectsContainer">
+<h3>Add Project</h3>
+
+<input
+type="text"
+id="projectName"
+placeholder="Project Name">
+
+<textarea
+id="projectDesc"
+placeholder="Project Description">
+</textarea>
+
+<input
+type="file"
+id="projectImage"
+accept="image/*">
+
+<button
+class="primary-btn"
+onclick="addProject()">
+
+Add Project
+
+</button>
+
+<hr style="margin:20px 0;">
+
+<div id="projectsList"></div>
+</div>
+
+</div>
+
+<!-- CERTIFICATES -->
+
+<div
+class="card section"
+id="certificatesSection"
+style="display:none;">
+
+<h2>Certificates</h2>
+
+<div id="certificatesContainer">
+<h3>Add Certificate</h3>
+
+<input
+type="text"
+id="certificateName"
+placeholder="Certificate Name">
+
+<textarea
+id="certificateDesc"
+placeholder="Certificate Description">
+</textarea>
+
+<input
+type="file"
+id="certificateImage"
+accept="image/*">
+
+<button
+class="primary-btn"
+onclick="addCertificate()">
+
+Add Certificate
+
+</button>
+
+<hr style="margin:20px 0;">
+
+<div id="certificatesList"></div>
+</div>
+
+</div>
+
 </div>
 
 <script>
 
-/* =========================
-   🔐 LOGIN CHECK
-========================= */
+/* LOGIN CHECK */
 
 if(!localStorage.getItem("isLoggedIn")){
-  window.location.href = "login.html";
+window.location.href="login.html";
 }
 
+/* SUPABASE */
 
-/* =========================
-   🔥 SUPABASE SETUP
-========================= */
+const supabaseUrl =
+"https://ezkwfqafaitcgatmkxvb.supabase.co";
 
-const supabaseUrl = "https://ezkwfqafaitcgatmkxvb.supabase.co";
-const supabaseKey = ""eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV6a3dmcWFmYWl0Y2dhdG1reHZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4ODg4OTIsImV4cCI6MjA5NjQ2NDg5Mn0.prvfYOphxDw9rfx3_ZpVKia1yGjxU6tvHYLs1zMR_MQ";
+const supabaseKey =
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV6a3dmcWFmYWl0Y2dhdG1reHZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4ODg4OTIsImV4cCI6MjA5NjQ2NDg5Mn0.prvfYOphxDw9rfx3_ZpVKia1yGjxU6tvHYLs1zMR_MQ";
 
-const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+const supabaseClient =
+window.supabase.createClient(
+supabaseUrl,
+supabaseKey
+);
 
+/* SECTION SWITCH */
 
-/* =========================
-   🚪 LOGOUT
-========================= */
+function showSection(id){
+
+document
+.querySelectorAll(".section")
+.forEach(section=>{
+
+section.style.display="none";
+
+});
+
+document
+.getElementById(id)
+.style.display="block";
+
+}
+
+/* LOGOUT */
 
 function logout(){
-  localStorage.removeItem("isLoggedIn");
-  window.location.href = "login.html";
+
+localStorage.removeItem(
+"isLoggedIn"
+);
+
+window.location.href =
+"login.html";
+
 }
 
+/* PROFILE IMAGE */
 
-/* =========================
-   🚀 ADD PROJECT
-========================= */
+async function uploadProfileImage(){
 
+const file =
+document
+.getElementById(
+"profile-input"
+)
+.files[0];
+
+if(!file){
+
+alert("Select image");
+return;
+
+}
+
+const fileName =
+Date.now()+"-"+file.name;
+
+const {error} =
+await supabaseClient
+.storage
+.from("profile-images")
+.upload(
+fileName,
+file
+);
+
+if(error){
+
+alert(error.message);
+return;
+
+}
+
+const {data} =
+supabaseClient
+.storage
+.from("profile-images")
+.getPublicUrl(fileName);
+
+await supabaseClient
+.from("about_me")
+.update({
+
+image_url:
+data.publicUrl
+
+})
+.eq("id",1);
+
+loadProfile();
+
+alert(
+"Profile Updated"
+);
+
+}
+
+/* LOAD PROFILE */
+
+async function loadProfile(){
+
+const {data} =
+await supabaseClient
+.from("about_me")
+.select("*")
+.single();
+
+if(data){
+
+document
+.getElementById(
+"profilePreview"
+)
+.src =
+data.image_url || "";
+
+}
+
+}
+
+/* ABOUT */
+
+async function loadAbout(){
+
+const {data} =
+await supabaseClient
+.from("about_me")
+.select("*")
+.single();
+
+if(data){
+
+document
+.getElementById(
+"about-text"
+)
+value =
+data.content || "";
+
+}
+
+}
+
+async function updateAbout(){
+
+const content =
+document
+.getElementById(
+"about-text"
+).value;
+
+await supabaseClient
+.from("about_me")
+.update({
+
+content:content
+
+})
+.eq("id",1);
+
+alert(
+"About Updated"
+);
+
+}
+
+/* SKILLS */
+
+async function addSkill(){
+
+const skill =
+document
+.getElementById(
+"skillInput"
+).value;
+
+if(!skill){
+
+return;
+
+}
+
+await supabaseClient
+.from("skills")
+.insert([{
+
+skill_name:skill
+
+}]);
+
+document
+.getElementById(
+"skillInput"
+).value="";
+
+loadSkills();
+
+}
+
+async function deleteSkill(id){
+
+await supabaseClient
+.from("skills")
+.delete()
+.eq("id",id);
+
+loadSkills();
+
+}
+
+async function loadSkills(){
+
+const {data} =
+await supabaseClient
+.from("skills")
+.select("*");
+
+const list =
+document
+.getElementById(
+"skillsList"
+);
+
+list.innerHTML="";
+
+data.forEach(skill=>{
+
+list.innerHTML += `
+
+<div class="skill-item">
+
+<span>
+${skill.skill_name}
+</span>
+
+<button
+class="danger-btn"
+onclick="deleteSkill(${skill.id})">
+
+Delete
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+/* INITIAL LOAD */
 async function addProject(){
 
-  const title = document.getElementById("title").value;
-  const desc = document.getElementById("desc").value;
+const file =
+document
+.getElementById(
+"projectImage"
+)
+.files[0];
 
-  const { error } = await supabase
-    .from("projects")
-    .insert([{ title, description: desc }]);
+let imageUrl="";
 
-  if(error){
-    document.getElementById("projectMsg").innerText = "❌ Error adding project";
-  } else {
-    document.getElementById("projectMsg").innerText = "✅ Project added!";
-    document.getElementById("title").value = "";
-    document.getElementById("desc").value = "";
-  }
+if(file){
+
+const fileName =
+Date.now()+"-"+file.name;
+
+await supabaseClient
+.storage
+.from("project-images")
+.upload(
+fileName,
+file
+);
+
+const {data} =
+supabaseClient
+.storage
+.from("project-images")
+.getPublicUrl(
+fileName
+);
+
+imageUrl =
+data.publicUrl;
+
 }
 
+await supabaseClient
+.from("projects")
+.insert([{
 
-/* =========================
-   🏆 ADD CERTIFICATE
-========================= */
+name:
+document
+.getElementById(
+"projectName"
+)
+.value,
+
+description:
+document
+.getElementById(
+"projectDesc"
+)
+.value,
+
+image_url:
+imageUrl
+
+}]);
+
+document
+.getElementById(
+"projectName"
+)
+.value="";
+
+document
+.getElementById(
+"projectDesc"
+)
+.value="";
+
+loadProjects();
+
+}
+
+async function deleteProject(id){
+
+await supabaseClient
+.from("projects")
+.delete()
+.eq("id",id);
+
+loadProjects();
+
+}
+
+async function loadProjects(){
+
+const {data} =
+await supabaseClient
+.from("projects")
+.select("*")
+.order(
+"id",
+{ascending:false}
+);
+
+const list =
+document
+.getElementById(
+"projectsList"
+);
+
+list.innerHTML="";
+
+data.forEach(project=>{
+
+list.innerHTML += `
+
+<div class="card">
+
+<img
+src="${project.image_url}"
+style="
+width:100%;
+height:200px;
+object-fit:cover;
+border-radius:10px;
+">
+
+<h3>
+${project.name}
+</h3>
+
+<p>
+${project.description}
+</p>
+
+<button
+class="danger-btn"
+onclick="deleteProject(${project.id})">
+
+Delete
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
 
 async function addCertificate(){
 
-  const name = document.getElementById("certName").value;
-  const img = document.getElementById("certImg").value;
+const file =
+document
+.getElementById(
+"certificateImage"
+)
+.files[0];
 
-  const { error } = await supabase
-    .from("certificates")
-    .insert([{ certificate_name: name, image_url: img }]);
+let imageUrl="";
 
-  if(error){
-    document.getElementById("certMsg").innerText = "❌ Error adding certificate";
-  } else {
-    document.getElementById("certMsg").innerText = "✅ Certificate added!";
-    document.getElementById("certName").value = "";
-    document.getElementById("certImg").value = "";
-  }
+if(file){
+
+const fileName =
+Date.now()+"-"+file.name;
+
+await supabaseClient
+.storage
+.from("certificate-images")
+.upload(
+fileName,
+file
+);
+
+const {data} =
+supabaseClient
+.storage
+.from("certificate-images")
+.getPublicUrl(
+fileName
+);
+
+imageUrl =
+data.publicUrl;
+
 }
+
+await supabaseClient
+.from("certificates")
+.insert([{
+
+created_name:
+document
+.getElementById(
+"certificateName"
+)
+.value,
+
+description:
+document
+.getElementById(
+"certificateDesc"
+)
+.value,
+
+image_url:
+imageUrl
+
+}]);
+
+document
+.getElementById(
+"certificateName"
+)
+.value="";
+
+document
+.getElementById(
+"certificateDesc"
+)
+.value="";
+
+loadCertificates();
+
+}
+
+async function deleteCertificate(id){
+
+await supabaseClient
+.from("certificates")
+.delete()
+.eq("id",id);
+
+loadCertificates();
+
+}
+
+async function loadCertificates(){
+
+const {data} =
+await supabaseClient
+.from("certificates")
+.select("*")
+.order(
+"id",
+{ascending:false}
+);
+
+const list =
+document
+.getElementById(
+"certificatesList"
+);
+
+list.innerHTML="";
+
+data.forEach(cert=>{
+
+list.innerHTML += `
+
+<div class="card">
+
+<img
+src="${cert.image_url}"
+style="
+width:100%;
+height:200px;
+object-fit:cover;
+border-radius:10px;
+">
+
+<h3>
+${cert.created_name}
+</h3>
+
+<p>
+${cert.description}
+</p>
+
+<button
+class="danger-btn"
+onclick="deleteCertificate(${cert.id})">
+
+Delete
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+loadProfile();
+loadAbout();
+loadSkills();
+loadProjects();
+loadCertificates();
 
 </script>
 
