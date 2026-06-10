@@ -328,18 +328,7 @@ Add Certificate
 
 /* LOGIN CHECK */
 
-async function checkAuth(){
 
- const { data:{session} } =
- await supabaseClient.auth.getSession();
-
- if(!session){
-   window.location.href="login.html";
- }
-
-}
-
-checkAuth();
 
 /* SUPABASE */
 
@@ -355,7 +344,18 @@ supabaseUrl,
 supabaseKey
 );
 
-/* SECTION SWITCH */
+async function checkAuth(){
+
+ const { data:{session} } =
+ await supabaseClient.auth.getSession();
+
+ if(!session){
+   window.location.href="login.html";
+ }
+
+}
+
+checkAuth();/* SECTION SWITCH */
 
 function showSection(id){
 
@@ -375,7 +375,7 @@ document
 
 /* LOGOUT */
 
-function logout(){
+async function logout(){
 
 await supabaseClient.auth.signOut();
 
