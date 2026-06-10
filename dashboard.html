@@ -472,22 +472,19 @@ data.image_url || "";
 
 async function loadAbout(){
 
-const {data} =
-await supabaseClient
-.from("about_me")
-.select("*")
-.single();
+ const {data} =
+ await supabaseClient
+ .from("about_me")
+ .select("*")
+ .single();
 
-if(data){
+ if(data){
 
-document
-.getElementById(
-"about-text"
-)
-value =
-data.content || "";
+   document
+   .getElementById("about-text")
+   .value = data.content || "";
 
-}
+ }
 
 }
 
