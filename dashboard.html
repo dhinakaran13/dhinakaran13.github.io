@@ -998,6 +998,56 @@ loadCertificates();
 
 }
 
+async function changeCertificateImage(certificateId){
+
+ const input = document.createElement("input");
+
+ input.type = "file";
+ input.accept = "image/*";
+
+ input.onchange = async ()=>{
+
+   const file = input.files[0];
+
+   if(!file) return;
+
+   const fileName =
+   Date.now() + "-" + file.name;
+
+   const { error } =
+   await supabaseClient
+   .storage
+   .from("certificate-images")
+   .upload(fileName,file);
+
+   if(error){
+      alert(error.message);
+      return;
+   }
+
+   const { data } =
+   supabaseClient
+   .storage
+   .from("certificate-images")
+   .getPublicUrl(fileName);
+
+   await supabaseClient
+   .from("certificates")
+   .update({
+      image_url:data.publicUrl
+   })
+   .eq("id",certificateId);
+
+   loadCertificates();
+
+   alert("Certificate Image Updated");
+
+ };
+
+ input.click();
+
+}
+
 async function loadCertificates(){
 
 const {data} =
@@ -1048,6 +1098,13 @@ ${cert.id},
 )">
 
 Edit
+
+</button>
+
+<button
+onclick="changeCertificateImage(${cert.id})">
+
+Change Image
 
 </button>
 
