@@ -72,9 +72,7 @@ Dynamic-Portfolio-Website/
 ├── index.html          # Portfolio Website
 ├── login.html          # Portfolio Manager Login
 ├── dashboard.html      # Portfolio Editor
-├── README.md
-│
-└── assets/
+└── README.md
 ```
 
 ---
