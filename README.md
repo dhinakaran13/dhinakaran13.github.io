@@ -67,7 +67,7 @@ The project features a secure **Portfolio Manager Login** and a dedicated **Port
 ## 📂 Project Structure
 
 ```text
-Dynamic-Portfolio-Website
+dhinakaran13.github.io
 │
 ├── index.html          # Portfolio Website
 ├── login.html          # Portfolio Manager Login
