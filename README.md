@@ -67,7 +67,7 @@ The project features a secure **Portfolio Manager Login** and a dedicated **Port
 ## 📂 Project Structure
 
 ```text
-Dynamic-Portfolio-Website/
+Dynamic-Portfolio-Website
 │
 ├── index.html          # Portfolio Website
 ├── login.html          # Portfolio Manager Login
