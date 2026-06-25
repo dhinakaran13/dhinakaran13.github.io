@@ -162,7 +162,7 @@ Portfolio: https://dhinakaran13.github.io
 
 GitHub: https://github.com/dhinakaran13
 
-LinkedIn: https://www.linkedin.com/in/dhinakaran-r-4a1420381
+LinkedIn: https://www.linkedin.com/in/dhinakaranr
 
 ---
 
